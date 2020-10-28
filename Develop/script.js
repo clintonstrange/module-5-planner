@@ -10,8 +10,10 @@ var loadDate = function () {
 var auditTime = function (timeEl) {
   for (var i = 0; i < timeEl.length; i++) {
     var time = $(timeEl[i]).text().trim();
-    var convertedTime = moment(time, "LT");
-
+    var convertedTime = moment(time, "H");
+    // console.log(convertedTime);
+    // console.log(moment(time));
+    // console.log(Math.abs(moment().diff(convertedTime, "hours")));
     if (moment().isAfter(convertedTime)) {
       $(eventEl[i]).removeClass("future");
       $(eventEl[i]).addClass("past");
