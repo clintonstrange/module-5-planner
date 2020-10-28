@@ -10,13 +10,12 @@ var loadDate = function () {
 var auditTime = function (timeEl) {
   for (var i = 0; i < timeEl.length; i++) {
     var time = $(timeEl[i]).text().trim();
-    var convertedTime = moment(time, "hh:mm a").set("minute", 0);
-    console.log(convertedTime);
-    console.log(moment().set("minute", 0));
+    var convertedTime = moment(time, "LT");
+
     if (moment().isAfter(convertedTime)) {
       $(eventEl[i]).removeClass("future");
       $(eventEl[i]).addClass("past");
-    } else if (moment().set("minute", 0) === convertedTime) {
+    } else if (Math.abs(moment().diff(convertedTime, "hours")) < 1) {
       $(eventEl[i]).removeClass("future");
       $(eventEl[i]).addClass("present");
     }
