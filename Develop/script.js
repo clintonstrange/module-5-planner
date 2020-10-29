@@ -3,12 +3,23 @@ var hourEl = $(".hour");
 // var eventClassEl = $(".event");
 // var btnClassEl = $(".saveBtn");
 // var events = localStorage.getItem("events") || [];
-var events = [];
+var events = JSON.parse(localStorage.getItem("events")) || [];
+
+var renderEvents = function (events) {
+  console.log(events);
+  // for (var i = 0; i < events.length; i++) {
+  //   var eventTextItem = $("<textarea>");
+  //   eventTextItem.text(events.);
+
+  //   console.log(eventTextItem);
+  //   events[i].id.append(eventTextItem);
+  // }
+};
 
 var loadPlanner = function () {
   var todaysDate = moment().format("dddd, MMMM Do YYYY");
   $("#currentDay").append(todaysDate);
-
+  renderEvents(events);
   auditTime(hourEl);
 };
 
@@ -16,33 +27,21 @@ var saveEvents = function () {
   localStorage.setItem("events", JSON.stringify("events"));
 };
 
-$(".time-block").on("click", ".event", function (event) {
-  var text = $(this).text().trim();
-  var textInput = $("<textarea>").addClass("event col-10").val(text);
-  $(this).replaceWith(textInput);
-  textInput.trigger("focus");
-});
-
-$(".time-block").on("blur", "textarea", function () {
-  var text = $(this).val().trim();
-
-  var textP = $("<p>").addClass("event col-10").text(text);
-
-  $(this).replaceWith(textP);
-  auditTime(hourEl);
-});
-
-$(".time-block").on("click", ".saveBtn", function () {
+$(".saveBtn").on("click", function () {
+  console.log(this);
   var event = {
-    text: $(".event").text().trim(),
+    text: $(this).siblings("textarea").val(),
+    id: $(this).siblings("textarea").attr("id"),
   };
-  console.log(event);
+  console.log("clicked:", event);
 
   var timeBtnSave = $(this).attr("id");
   console.log(timeBtnSave);
 
   events.push(event);
   console.log(events);
+
+  localStorage.setItem("events", JSON.stringify(events));
 });
 
 var auditTime = function (timeEl) {
