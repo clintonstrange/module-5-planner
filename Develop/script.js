@@ -1,24 +1,22 @@
 var eventEl = $(".future");
 var hourEl = $(".hour");
-var events = {};
+// var eventClassEl = $(".event");
+// var btnClassEl = $(".saveBtn");
+// var events = localStorage.getItem("events") || [];
+var events = [];
 
 var loadPlanner = function () {
   var todaysDate = moment().format("dddd, MMMM Do YYYY");
   $("#currentDay").append(todaysDate);
+
   auditTime(hourEl);
-  events = JSON.parse(localStorage.getItem("events"));
-  if (!events) {
-    events = {
-      text: $(".event").text().trim(),
-    };
-  }
 };
 
 var saveEvents = function () {
-  localStorage.setItem("events", JSON.stringify(events));
+  localStorage.setItem("events", JSON.stringify("events"));
 };
 
-$(".time-block").on("click", ".event", function () {
+$(".time-block").on("click", ".event", function (event) {
   var text = $(this).text().trim();
   var textInput = $("<textarea>").addClass("event col-10").val(text);
   $(this).replaceWith(textInput);
@@ -28,17 +26,23 @@ $(".time-block").on("click", ".event", function () {
 $(".time-block").on("blur", "textarea", function () {
   var text = $(this).val().trim();
 
-  events.text = events;
-  saveTasks();
-
   var textP = $("<p>").addClass("event col-10").text(text);
 
   $(this).replaceWith(textP);
   auditTime(hourEl);
 });
 
-$("time-block").on("click", ".saveBtn", function () {
-  saveEvents();
+$(".time-block").on("click", ".saveBtn", function () {
+  var event = {
+    text: [$(".event").text().trim()],
+  };
+  console.log(event);
+
+  var timeBtnSave = $(this).attr("id");
+  console.log(timeBtnSave);
+
+  events.text.push(event);
+  console.log(events);
 });
 
 var auditTime = function (timeEl) {
@@ -62,11 +66,9 @@ var auditTime = function (timeEl) {
 };
 
 setInterval(function () {
-  $(".container .time-block").each(function (index, el) {
+  $(".container .time-block").each(function (el) {
     auditTask(el);
   });
 }, 1000 * 60 * 5);
 
 loadPlanner();
-
-//each hour will be col-1 and the event-info will take up col-10 with the save button being col-1
