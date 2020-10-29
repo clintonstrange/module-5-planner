@@ -34,14 +34,14 @@ $(".time-block").on("blur", "textarea", function () {
 
 $(".time-block").on("click", ".saveBtn", function () {
   var event = {
-    text: [$(".event").text().trim()],
+    text: $(".event").text().trim(),
   };
   console.log(event);
 
   var timeBtnSave = $(this).attr("id");
   console.log(timeBtnSave);
 
-  events.text.push(event);
+  events.push(event);
   console.log(events);
 });
 
