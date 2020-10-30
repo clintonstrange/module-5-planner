@@ -1,78 +1,42 @@
-var eventEl = $(".future");
-var hourEl = $(".hour");
-var events = JSON.parse(localStorage.getItem("events")) || [];
-
-var renderEvents = function (events) {
-  console.log(events);
-  for (var i = 0; i < events.length; i++) {
-    $("#" + events[i].id).val(events[i].text);
-  }
+// Geting time block textarea from localStorage - suggestion from Trilogy ASK BCS Learning Assistant
+var renderEvents = function () {
+  $("#event-9").val(localStorage.getItem("event-9"));
+  $("#event-10").val(localStorage.getItem("event-10"));
+  $("#event-11").val(localStorage.getItem("event-11"));
+  $("#event-12").val(localStorage.getItem("event-12"));
+  $("#event-13").val(localStorage.getItem("event-13"));
+  $("#event-14").val(localStorage.getItem("event-14"));
+  $("#event-15").val(localStorage.getItem("event-15"));
+  $("#event-16").val(localStorage.getItem("event-16"));
+  $("#event-17").val(localStorage.getItem("event-17"));
 };
 
 var loadPlanner = function () {
+  var hourEl = $(".hour");
   var todaysDate = moment().format("dddd, MMMM Do YYYY");
   $("#currentDay").append(todaysDate);
-  renderEvents(events);
+  renderEvents();
   auditTime(hourEl);
 };
 
-var saveEvents = function () {
-  localStorage.setItem("events", JSON.stringify("events"));
-};
-
 $(".saveBtn").on("click", function () {
-  // console.log(this);
-  var event = {
-    text: $(this).siblings("textarea").val(),
-    id: $(this).siblings("textarea").attr("id"),
-  };
-  //console.log("clicked:", event);
-
-  // var timeBtnSave = $(this).attr("id");
-  // console.log(timeBtnSave);
-  // var eventIdKey = events.keys();
-  // for (key of eventIdKey) {
-  //   console.log(key);
-  //   var tempArr = ;
-  //   console.log(tempArr.val());
-  // }
-
-  // var eventIdValue = event.id.values();
-  // console.logeventIdValue;
-  // for (values of eventIdValue) {
-  //   console.log(values);
-  // }
-  // console.log(eventIdValue);
-  // events.splice(match(event.id), 1);
-  console.log(events);
-  var newEvent = events.filter(function (event) {
-    return events.id !== event.id;
-  });
-  console.log(newEvent);
-  // console.log(newEvent.id);
-  // console.log(events);
-  // console.log(event.id);
-  //events.push(newEvent);
-  newEvent.push(event);
-  //console.log(events);
-
-  localStorage.setItem("events", JSON.stringify(events));
+  var time = $(this).siblings("textarea").attr("id");
+  var value = $(this).siblings("textarea").val();
+  localStorage.setItem(time, value);
 });
 
 var auditTime = function (timeEl) {
+  var eventEl = $(".future");
+
   for (var i = 0; i < timeEl.length; i++) {
     var time = $(timeEl[i]).attr("id");
-    //console.log(time);
     var currentTime = moment().format("HH");
-    //console.log(currentTime);
 
     if (currentTime === time) {
-      //console.log("present");
       $(eventEl[i]).removeClass("future");
       $(eventEl[i]).addClass("present");
     }
     if (currentTime > time) {
-      //console.log("past");
       $(eventEl[i]).removeClass("future");
       $(eventEl[i]).addClass("past");
     }
