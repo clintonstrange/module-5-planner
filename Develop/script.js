@@ -11,6 +11,8 @@ var renderEvents = function () {
   $("#event-17").val(localStorage.getItem("event-17"));
 };
 
+// Load day and date at top of page.
+// check for time so time blocks are color coded appropriately at page load.
 var loadPlanner = function () {
   var hourEl = $(".hour");
   var todaysDate = moment().format("dddd, MMMM Do YYYY");
@@ -19,12 +21,14 @@ var loadPlanner = function () {
   auditTime(hourEl);
 };
 
+// save edits made in textarea to time block in local Storage
 $(".saveBtn").on("click", function () {
   var time = $(this).siblings("textarea").attr("id");
   var value = $(this).siblings("textarea").val();
   localStorage.setItem(time, value);
 });
 
+// compare time for time blocks to current time to color code appropriately
 var auditTime = function (timeEl) {
   var eventEl = $(".future");
 
@@ -43,10 +47,12 @@ var auditTime = function (timeEl) {
   }
 };
 
+// check time every 5 minutes to make sure time blocks are color coded approptiately
 setInterval(function () {
   $(".container .time-block").each(function (el) {
     auditTime(el);
   });
 }, 1000 * 60 * 5);
 
+// load planner to page.
 loadPlanner();
