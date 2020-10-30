@@ -30,14 +30,30 @@ $(".saveBtn").on("click", function () {
 
   // var timeBtnSave = $(this).attr("id");
   // console.log(timeBtnSave);
-  var eventIdKey = events.keys();
-  for (key of eventIdKey) {
-    console.log(key);
-    var tempArr = { key };
-    console.log(tempArr.val());
-  }
+  // var eventIdKey = events.keys();
+  // for (key of eventIdKey) {
+  //   console.log(key);
+  //   var tempArr = ;
+  //   console.log(tempArr.val());
+  // }
+
+  // var eventIdValue = event.id.values();
+  // console.logeventIdValue;
+  // for (values of eventIdValue) {
+  //   console.log(values);
+  // }
+  // console.log(eventIdValue);
   // events.splice(match(event.id), 1);
-  events.push(event);
+  console.log(events);
+  var newEvent = events.filter(function (event) {
+    return events.id !== event.id;
+  });
+  console.log(newEvent);
+  // console.log(newEvent.id);
+  // console.log(events);
+  // console.log(event.id);
+  //events.push(newEvent);
+  newEvent.push(event);
   //console.log(events);
 
   localStorage.setItem("events", JSON.stringify(events));
