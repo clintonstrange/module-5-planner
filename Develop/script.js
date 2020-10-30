@@ -30,9 +30,15 @@ $(".saveBtn").on("click", function () {
 
   // var timeBtnSave = $(this).attr("id");
   // console.log(timeBtnSave);
-  //events.splice([event.id], 1);
+  var eventIdKey = events.keys();
+  for (key of eventIdKey) {
+    console.log(key);
+    var tempArr = { key };
+    console.log(tempArr.val());
+  }
+  // events.splice(match(event.id), 1);
   events.push(event);
-  console.log(events);
+  //console.log(events);
 
   localStorage.setItem("events", JSON.stringify(events));
 });
